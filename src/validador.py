@@ -1,41 +1,42 @@
 from pydantic import BaseModel, Field
+from typing import Optional
 
 class Estatisticas(BaseModel):
-    ID: int = Field(...)  # Real number (ℝ)
-    ID_Cliente: int = Field(...)  # Real number (ℝ)
-    Cliente: str = Field(...)  # Text
-    E_mail: str = Field(...)  # Text
-    DDD: int = Field(...)  # Real number (ℝ)
-    Telefone: str = Field(...)  # Real number (ℝ)
-    ID_Imóvel: int = Field(...)  # Real number (ℝ)
-    Imóvel: str = Field(...)  # Text
-    Plano: str = Field(...)  # Categorical
-    Cidade: str = Field(...)  # Categorical
-    Estado: str = Field(...)  # Categorical
-    ID_Anunciante: int = Field(...)  # Real number (ℝ)
-    Anunciante: str = Field(...)  # Text
-    ID_Contratante: int = Field(...)  # Categorical
-    Contratante: str = Field(...)  # Categorical
-    ID_Campanha: int = Field(..., nullable=True)  # Real number (ℝ)
-    Campanha: str = Field(..., nullable=True)  # Text
-    Tipo: str = Field(...)  # Categorical
-    Mensagem: str = Field(...)  # Text
-    Canal: str = Field(...)  # Categorical
-    Recibo: str = Field(..., nullable=True)  # Text
-    Bonificado: str = Field(...)  # Categorical
-    Motivo_da_Bonificação: str = Field(..., nullable=True)  # Categorical
-    Elogio: str = Field(...)  # Categorical
-    Crítica: str = Field(...)  # Categorical
-    Repescagem: str = Field(..., nullable=True)  # Categorical
-    Feedback: str = Field(...)  # Text
-    Criado: float = Field(...)  # Real number (ℝ)
-    UTM_Source: str = Field(...)  # Categorical
-    UTM_Medium: str = Field(...)  # Categorical
-    UTM_Campaign: str = Field(..., nullable=True)  # Categorical
-    UTM_Content: str = Field(..., nullable=True)  # Categorical
-    IP: str = Field(...)  # Text
-    Últ._Atualização: float = Field(...)  # Real number (ℝ)
-    Data: int = Field(...)  # Real number (ℝ)
+    id: int = Field(...)  # Real number (ℝ)
+    id_cliente: int = Field(...)  # Real number (ℝ)
+    cliente: str = Field(...)  # Text
+    email: str = Field(...)  # Text
+    ddd: Optional[int] = Field(default=None)  # Real number (ℝ)
+    telefone: int = Field(...)  # Real number (ℝ)
+    id_imovel: int = Field(...)  # Real number (ℝ)
+    imovel: str = Field(...)  # Text
+    plano: Optional[str] = Field(default=None)  # Categorical
+    cidade: str = Field(...)  # Categorical
+    estado: str = Field(...)  # Categorical
+    id_anunciante: int = Field(...)  # Real number (ℝ)
+    anunciante: str = Field(...)  # Text
+    id_contratante: Optional[float] = Field(default=None)  # Real number (ℝ)
+    contratante: Optional[str] = Field(default=None,)  # Categorical
+    id_campanha: Optional[int] = Field(default=None)  # Real number (ℝ)
+    campanha: Optional[str] = Field(default=None)  # Text
+    tipo: str = Field(...)  # Categorical
+    mensagem: Optional[str] = Field(default=None)  # Text
+    canal: str = Field(...)  # Categorical
+    recibo: Optional[str] = Field(default=None)  # Text
+    bonificado: str = Field(...)  # Categorical
+    motivo: Optional[str] = Field(default=None)  # Categorical
+    elogio: str = Field(...)  # Categorical
+    critica: str = Field(...)  # Categorical
+    repescagem: str = Field(...)  # Categorical
+    feedback: Optional[str] = Field(default=None)  # Text
+    criado: float = Field(...)  # Real number (ℝ)
+    utm_source: str = Field(...)  # Categorical
+    utm_medium: str = Field(...)  # Categorical
+    utm_campaign: Optional[str] = Field(default=None)  # Text
+    utm_content: Optional[str] = Field(default=None)  # Text
+    ip: str = Field(...)  # Text
+    ult_atualizacao: float = Field(...)  # Real number (ℝ)
+    data: int = Field(...)  # Real number (ℝ)
 
 class Config:
         validate_default = True

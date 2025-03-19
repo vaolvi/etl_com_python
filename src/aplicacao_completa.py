@@ -7,12 +7,15 @@ def validar_dados(df):
     erros = []
     dados_validados = []
     
+    # Substitui NaN por None
+    df = df.where(pd.notnull(df), None)
+    
     for index, row in df.iterrows():
         try:
             # Converte a linha do DataFrame para dicionário
             dados = row.to_dict()
             
-            # Valida os dados usando o modelo User
+            # Valida os dados usando o modelo Estatisticas
             usuario_validado = Estatisticas(**dados)
             dados_validados.append(usuario_validado)
             
