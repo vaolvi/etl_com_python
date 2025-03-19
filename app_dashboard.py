@@ -13,16 +13,13 @@ if uploaded_file is not None:
     df = pd.read_excel(uploaded_file, 'Sheet1')
 
     # Convertendo colunas para os tipos adequados
-    df['data'] = pd.to_datetime(df['Date'], errors='coerce')
-    df['Amount_spent'] = df['Amount_spent'].replace({'R$ ': ''}, regex=True).astype(float)
-    df['Link_clicks'] = pd.to_numeric(df['Link_clicks'], errors='coerce').fillna(0).astype(int)
-    df['Conversions'] = pd.to_numeric(df['Conversions'], errors='coerce').fillna(0).astype(int)
+    df['data'] = pd.to_datetime(df['data'], errors='coerce', origin='1899-12-30', unit='D')
     
     # Cálculo de KPIs
-    kpi1 = df.groupby(df['Date'].dt.strftime('%Y-%m'))['Amount_spent'].sum()
-    kpi2 = df.groupby(df['Date'].dt.strftime('%Y-%m'))['Conversions'].sum()
-    kpi3 = df.groupby(df['Date'].dt.strftime('%Y-%m'))['Link_clicks'].sum()
-    kpi4 = (df.groupby(df['Date'].dt.strftime('%Y-%m'))['Amount_spent'].sum() / df.groupby(df['Date'].dt.strftime('%Y-%m'))['Conversions'].sum()).fillna(0)
+    kpi1 = df.groupby(df['data'].dt.strftime('%Y-%m'))['id'].count()
+    # kpi2 = df.groupby(df['data'].dt.strftime('%Y-%m'))['Conversions'].sum()
+    # kpi3 = df.groupby(df['data'].dt.strftime('%Y-%m'))['Link_clicks'].sum()
+    # kpi4 = (df.groupby(df['data'].dt.strftime('%Y-%m'))['Amount_spent'].sum() / df.groupby(df['data'].dt.strftime('%Y-%m'))['Conversions'].sum()).fillna(0)
     
     # Exibição dos dados
     st.write("### Amostra dos Dados")
@@ -32,16 +29,16 @@ if uploaded_file is not None:
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.metric(label="Mês com Maior Gasto", value=str(kpi1.idxmax()))
-    with col2:
-        st.metric(label="Total de Conversões no Mês com Mais Gasto", value=int(kpi2.max()))
-    with col3:
-        st.metric(label="Total de Cliques no Mês com Mais Gasto", value=int(kpi3.max()))
-    with col4:
-        st.metric(label="Custo por Conversão Médio", value=f"R$ {kpi4.mean():.2f}")
+    # with col2:
+    #     st.metric(label="Total de Conversões no Mês com Mais Gasto", value=int(kpi2.max()))
+    # with col3:
+    #     st.metric(label="Total de Cliques no Mês com Mais Gasto", value=int(kpi3.max()))
+    # with col4:
+    #     st.metric(label="Custo por Conversão Médio", value=f"R$ {kpi4.mean():.2f}")
     
     # Gráfico de Gasto por Data usando o Streamlit
     st.write("### Gasto Diário com Marketing")
-    st.line_chart(df.groupby('Date')['Amount_spent'].sum())
+    st.line_chart(df.groupby('data')['Amount_spent'].sum())
     
     # Gráfico de Gasto por Segmentação
     st.write("### Gasto por Segmentação")
@@ -67,7 +64,7 @@ if uploaded_file is not None:
 
     # Interactive Monthly Analysis
     st.subheader("🔍 Interactive Monthly Analysis")
-    df["Month"] = df["Date"].dt.month_name()
+    df["Month"] = df["data"].dt.month_name()
     months = df["Month"].unique().tolist()
     selected_month = st.selectbox("Select Month for Analysis", months)
 
@@ -76,7 +73,7 @@ if uploaded_file is not None:
 
     monthly_df = df[df["Month"] == selected_month]
     daily_summary = (
-        monthly_df.groupby(df["Date"].dt.day)[selected_column].sum().reset_index()
+        monthly_df.groupby(df["data"].dt.day)[selected_column].sum().reset_index()
     )
     daily_summary.columns = ["Day", selected_column]
 
