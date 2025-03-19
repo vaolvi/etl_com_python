@@ -55,10 +55,10 @@ def main():
                         # Opção para download dos dados validados
                         df_validado = pd.DataFrame([dados.dict() for dados in dados_validados])
                         st.download_button(
-                            label="Download dos dados validados",
-                            data=df_validado.to_excel(index=False),
-                            file_name="dados_validados.xlxs",
-                            mime="text/excel"
+                            label = "Download dos dados validados",
+                            data = df_validado.to_excel('dados_validados.xlsx'),
+                            file_name = "dados_validados.xlsx",
+                            mime = "text/excel"
                         )
                     
         except Exception as e:
