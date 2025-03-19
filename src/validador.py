@@ -16,8 +16,8 @@ class Estatisticas(BaseModel):
     id_anunciante: int = Field(...)  # Real number (ℝ)
     anunciante: str = Field(...)  # Text
     id_contratante: Optional[float] = Field(default=None)  # Real number (ℝ)
-    contratante: Optional[str] = Field(default=None,)  # Categorical
-    id_campanha: Optional[int] = Field(default=None)  # Real number (ℝ)
+    contratante: Optional[str] = Field(default=None)  # Categorical
+    id_campanha: Optional[float] = Field(default=None)  # Real number (ℝ)
     campanha: Optional[str] = Field(default=None)  # Text
     tipo: str = Field(...)  # Categorical
     mensagem: Optional[str] = Field(default=None)  # Text
@@ -28,7 +28,7 @@ class Estatisticas(BaseModel):
     elogio: str = Field(...)  # Categorical
     critica: str = Field(...)  # Categorical
     repescagem: str = Field(...)  # Categorical
-    feedback: Optional[str] = Field(default=None)  # Text
+    feedback: Optional[float] = Field(default=None)  # Text
     criado: float = Field(...)  # Real number (ℝ)
     utm_source: str = Field(...)  # Categorical
     utm_medium: str = Field(...)  # Categorical

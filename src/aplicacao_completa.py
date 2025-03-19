@@ -2,6 +2,9 @@ import pandas as pd
 import streamlit as st
 from validador import Estatisticas
 from pydantic import ValidationError
+from io import BytesIO
+
+buffer = BytesIO()
 
 def validar_dados(df):
     erros = []
@@ -54,15 +57,28 @@ def main():
                         
                         # Opção para download dos dados validados
                         df_validado = pd.DataFrame([dados.dict() for dados in dados_validados])
+
+                        excel_data = to_excel(df_validado)
+                
                         st.download_button(
                             label = "Download dos dados validados",
-                            data = df_validado.to_excel('dados_validados.xlsx'),
+                            data = excel_data,
                             file_name = "dados_validados.xlsx",
-                            mime = "text/excel"
+                            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                         )
                     
         except Exception as e:
             st.error(f"Erro ao processar o arquivo: {str(e)}")
+
+# Função ajustada para converter o DataFrame para Excel
+def to_excel(df):
+    output = BytesIO()
+    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+        # Escrevendo o DataFrame no Excel
+        df.to_excel(writer, index=False, sheet_name='Sheet1')
+    output.seek(0)  # Voltando ao início do buffer
+    return output.getvalue()
+
 
 if __name__ == "__main__":
     main()
