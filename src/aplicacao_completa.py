@@ -23,14 +23,14 @@ def validar_dados(df):
 
 def main():
     st.title("Validador de Dados de Campanhas")
-    st.write("Upload do arquivo CSV para validação")
+    st.write("Upload do arquivo Excel para validação")
     
-    uploaded_file = st.file_uploader("Escolha um arquivo CSV", type="csv")
+    uploaded_file = st.file_uploader("Escolha um arquivo Excel", type="xlsx")
     
     if uploaded_file is not None:
         try:
-            # Lê o arquivo CSV
-            df = pd.read_csv(uploaded_file)
+            # Lê o arquivo Excel
+            df = pd.read_excel(uploaded_file, 'Sheet1')
             
             st.write("Preview dos dados:")
             st.dataframe(df.head())
@@ -53,9 +53,9 @@ def main():
                         df_validado = pd.DataFrame([dados.dict() for dados in dados_validados])
                         st.download_button(
                             label="Download dos dados validados",
-                            data=df_validado.to_csv(index=False),
-                            file_name="dados_validados.csv",
-                            mime="text/csv"
+                            data=df_validado.to_excel(index=False),
+                            file_name="dados_validados.xlxs",
+                            mime="text/excel"
                         )
                     
         except Exception as e:
